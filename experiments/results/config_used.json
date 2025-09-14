@@ -1,0 +1,43 @@
+{
+  "test_size": 0.3,
+  "valid_size": 0.5,
+  "target": "class",
+  "max_rows": null,
+  "shifts": [
+    {
+      "name": "NoShift",
+      "type": "none"
+    },
+    {
+      "name": "GenderCovariateShift",
+      "type": "reweight",
+      "column": "sex",
+      "majority": "Male",
+      "minority": "Female",
+      "minority_weight": 2.0
+    },
+    {
+      "name": "AgeSubpopShift",
+      "type": "subsample",
+      "column": "age",
+      "rule": "x < 35",
+      "keep_frac": 0.5
+    },
+    {
+      "name": "EducationHighOnly",
+      "type": "filter",
+      "column": "education_num",
+      "rule": "x >= 10"
+    }
+  ],
+  "model": {
+    "type": "logreg",
+    "params": {
+      "C": 1.0,
+      "max_iter": 200
+    }
+  },
+  "explainer": "shap_linear",
+  "topk": 10,
+  "n_bootstrap": 20
+}
